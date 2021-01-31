@@ -1,0 +1,23 @@
+{
+    "name": "krystian/makao-game-php",
+    "require-dev": {
+        "phpunit/phpunit": "9.*"
+    },
+    "authors": [
+        {
+            "name": "kry.ign93",
+            "email": "kris_ignatiuk@wp.pl"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    }
+}
