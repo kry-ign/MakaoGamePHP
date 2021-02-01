@@ -8,7 +8,7 @@ use Makao\Exception\TooManyPlayerAddTheTableException;
 class Table
 {
     private const MAX_PlAYERS = 4;
-    private $players = [];
+    private array $players = [];
 
     public function countPlayers(): int
     {
