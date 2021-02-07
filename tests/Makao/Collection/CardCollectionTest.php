@@ -80,5 +80,10 @@ class CardCollectionTest extends TestCase
         $this->cartCollection->next();
         $this->assertFalse($this->cartCollection->valid());
         $this->assertSame(1, $this->cartCollection->key());
+
+        $this->cartCollection->rewind();
+        $this->assertTrue($this->cartCollection->valid());
+        $this->assertSame($card, $this->cartCollection->current());
+        $this->assertSame(0, $this->cartCollection->key());
     }
 }
