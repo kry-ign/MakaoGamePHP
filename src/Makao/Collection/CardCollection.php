@@ -9,6 +9,7 @@ use Makao\Exception\CardNotFoundExpection;
 
 class CardCollection implements \Countable, \Iterator
 {
+    private Const FIRST_CARD_INDEX = 0;
     private array $cards = [];
     private int $position = 0;
 
@@ -69,8 +70,8 @@ class CardCollection implements \Countable, \Iterator
     /**
      * @inheritdoc
      */
-    public function rewind()
+    public function rewind(): void
     {
-        // TODO: Implement rewind() method.
+        $this->position = self::FIRST_CARD_INDEX;
     }
 }
