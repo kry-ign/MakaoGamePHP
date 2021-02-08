@@ -101,7 +101,7 @@ class CardCollection implements \Countable, \Iterator, \ArrayAccess
      * @inheritdoc
      * @throws MethodNotAllowException
      */
-    public function offsetSet($offset, $value): Throws
+    public function offsetSet($offset, $value)
 
     {
         throw new MethodNotAllowException('You can not add card to collection as array. Use addCard() method!');

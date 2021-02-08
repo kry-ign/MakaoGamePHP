@@ -128,10 +128,10 @@ class CardCollectionTest extends TestCase
         $this->expectException(MethodNotAllowException::class);
         $this->expectExceptionMessage('You can not add card to collection as array. Use addCard() method!');
         //given
-        $this->cardCollection;
+
         $card = new Card();
         //when
-        $this->cardCollection = $card;
+        $this->cardCollection[] = $card;
 
         //then
     }
