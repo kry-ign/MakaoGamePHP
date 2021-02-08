@@ -7,6 +7,7 @@ namespace Tests\Makao\Collection;
 use Makao\Card;
 use Makao\Collection\CardCollection;
 use Makao\Exception\CardNotFoundExpection;
+use Makao\Exception\MethodNotAllowException;
 use PHPUnit\Framework\TestCase;
 
 class CardCollectionTest extends TestCase
@@ -14,11 +15,11 @@ class CardCollectionTest extends TestCase
     /**
      * @var CardCollection
      */
-    private CardCollection $cartCollection;
+    private CardCollection $cardCollection;
 
     protected function setUp(): void
     {
-        $this->cartCollection = new CardCollection();
+        $this->cardCollection = new CardCollection();
     }
 
     public function testShouldReturnZeroOnEmptyCollection(){
@@ -29,7 +30,7 @@ class CardCollectionTest extends TestCase
         //when
 
         //then
-        $this->assertCount(0,$this->cartCollection);
+        $this->assertCount(0,$this->cardCollection);
     }
     public function testShouldAddNewCardToCardCollection(){
         //expect
@@ -37,9 +38,9 @@ class CardCollectionTest extends TestCase
         //given
         $card = new Card();
         //when
-        $this->cartCollection->add($card);
+        $this->cardCollection->add($card);
         //then
-        $this->assertCount(1,$this->cartCollection);
+        $this->assertCount(1,$this->cardCollection);
 
     }
     public function testShouldAddNewCardsInChainToCardCollection(){
@@ -49,11 +50,11 @@ class CardCollectionTest extends TestCase
         $firstCard = new Card();
         $secondCard = new Card();
         //when
-        $this->cartCollection
+        $this->cardCollection
             ->add($firstCard)
             ->add($secondCard);
         //then
-        $this->assertCount(2,$this->cartCollection);
+        $this->assertCount(2,$this->cardCollection);
     }
     public function testShouldThrowCardNotFoundExpectionWhenITryPickCardFromEmptyCardCollection(){
         //expect
@@ -62,7 +63,7 @@ class CardCollectionTest extends TestCase
         //given
 
         //when
-        $this->cartCollection->pickCard();
+        $this->cardCollection->pickCard();
         //then
     }
     public function testShouldIterableOnCardCollection(){
@@ -71,19 +72,67 @@ class CardCollectionTest extends TestCase
         //given
         $card = new Card();
         //when & then
-        $this->cartCollection->add($card);
+        $this->cardCollection->add($card);
 
-        $this->assertTrue($this->cartCollection->valid());
-        $this->assertSame($card, $this->cartCollection->current());
-        $this->assertSame(0, $this->cartCollection->key());
+        $this->assertTrue($this->cardCollection->valid());
+        $this->assertSame($card, $this->cardCollection->current());
+        $this->assertSame(0, $this->cardCollection->key());
 
-        $this->cartCollection->next();
-        $this->assertFalse($this->cartCollection->valid());
-        $this->assertSame(1, $this->cartCollection->key());
+        $this->cardCollection->next();
+        $this->assertFalse($this->cardCollection->valid());
+        $this->assertSame(1, $this->cardCollection->key());
 
-        $this->cartCollection->rewind();
-        $this->assertTrue($this->cartCollection->valid());
-        $this->assertSame($card, $this->cartCollection->current());
-        $this->assertSame(0, $this->cartCollection->key());
+        $this->cardCollection->rewind();
+        $this->assertTrue($this->cardCollection->valid());
+        $this->assertSame($card, $this->cardCollection->current());
+        $this->assertSame(0, $this->cardCollection->key());
+    }
+    public function testShouldGetFirstCardFromCardCollectionAndRomoveThisCardFromDeck(){
+        //expect
+
+        //given
+        $firstCard = new Card();
+        $secondCard = new Card();
+        $this->cardCollection
+            ->add($firstCard)
+            ->add($secondCard);
+        //when
+        $actual = $this->cardCollection->pickCard();
+        //then
+        $this->assertCount(1,$this->cardCollection);
+        $this->assertSame($firstCard, $actual);
+        $this->assertSame($secondCard, $this->cardCollection[0]);
+    }
+    public function testShouldThrowCardNotFoundExpectionWhenIPickdAllCardFromCardCollection(){
+        //expect
+        $this->expectException(CardNotFoundExpection::class);
+        $this->expectExceptionMessage('You can not pick card form empty CradCollection!');
+        //given
+        $firstCard = new Card();
+        $secondCard = new Card();
+        $this->cardCollection
+            ->add($firstCard)
+            ->add($secondCard);
+        //when
+        $actual = $this->cardCollection->pickCard();
+        $this->assertSame($firstCard, $actual);
+
+        $actual = $this->cardCollection->pickCard();
+        $this->assertSame($secondCard, $actual);
+
+        $this->cardCollection->pickCard();
+        //then
+    }
+    public function testShouldThrowMethodNotAllowExceptionWhenYouTryAddCardToCollectionAsArray(){
+        //expect
+        $this->expectException(MethodNotAllowException::class);
+        $this->expectExceptionMessage('You can not add card to collection as array. Use addCard() method!');
+        //given
+        $this->cardCollection;
+        $card = new Card();
+        //when
+        $this->cardCollection = $card;
+
+        //then
     }
 }
