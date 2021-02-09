@@ -26,7 +26,7 @@ class CardServiceTest extends TestCase
         $i = 0;
         foreach(Card::values() as $value){
             foreach(Card::colors() as $color){
-                $this->assertEquals($value, $actual[$i]->getVaule());
+                $this->assertEquals($value, $actual[$i]->getValue());
                 $this->assertEquals($color, $actual[$i]->getColor());
                 ++$i;
             }

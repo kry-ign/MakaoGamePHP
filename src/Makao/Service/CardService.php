@@ -1,6 +1,7 @@
 <?php
 
 
+
 namespace Makao\Service;
 
 
@@ -15,7 +16,7 @@ class CardService
         $deck = new CardCollection();
         foreach(Card::values() as $value){
             foreach(Card::colors() as $color){
-                $deck->add($color, $value);
+                $deck->add(new Card($value, $color));
             }
         }
         return $deck;

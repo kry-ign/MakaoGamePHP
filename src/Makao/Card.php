@@ -29,12 +29,8 @@ class Card
     private string $value;
     private string $color;
 
-    /**
-     * Card constructor.
-     * @param $value
-     * @param $color
-     */
-    public function __construct(string $value, string $color)
+
+    public function __construct(string $value = 'test value', string $color = 'test value')
     {
         $this->value = $value;
         $this->color = $color;
