@@ -7,24 +7,24 @@ namespace Makao;
 
 class Card
 {
-    private const VALUE_TWO = '2';
-    private const VALUE_THREE = '3';
-    private const VALUE_FOUR = '4';
-    private const VALUE_FIVE = '5';
-    private const VALUE_SIX = '6';
-    private const VALUE_SEVEN = '7';
-    private const VALUE_EIGHT = '8';
-    private const VALUE_NINE = '9';
-    private const VALUE_TEN = '10';
-    private const VALUE_JACK = 'jack';
-    private const VALUE_QUEEN = 'queen';
-    private const VALUE_KING = 'king';
-    private const VALUE_ACE = 'ACE';
+    const VALUE_TWO = '2';
+    const VALUE_THREE = '3';
+    const VALUE_FOUR = '4';
+    const VALUE_FIVE = '5';
+    const VALUE_SIX = '6';
+    const VALUE_SEVEN = '7';
+    const VALUE_EIGHT = '8';
+    const VALUE_NINE = '9';
+    const VALUE_TEN = '10';
+    const VALUE_JACK = 'jack';
+    const VALUE_QUEEN = 'queen';
+    const VALUE_KING = 'king';
+    const VALUE_ACE = 'ACE';
 
-    private const COLOR_DIAMOND = 'diamond';
-    private const COLOR_SPADE = 'spade  ';
-    private const COLOR_CLUB = 'club';
-    private const COLOR_HEART = 'heart';
+    const COLOR_DIAMOND = 'diamond';
+    const COLOR_SPADE = 'spade  ';
+    const COLOR_CLUB = 'club';
+    const COLOR_HEART = 'heart';
 
     private string $value;
     private string $color;

@@ -15,6 +15,13 @@ class CardCollection implements \Countable, \Iterator, \ArrayAccess
     private array $cards = [];
     private int $position = 0;
 
+
+    public function __construct(array $cards = [])
+    {
+        $this->cards = $cards;
+    }
+
+
     /**
      * @return int|void
      */
@@ -101,7 +108,7 @@ class CardCollection implements \Countable, \Iterator, \ArrayAccess
      * @inheritdoc
      * @throws MethodNotAllowException
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
 
     {
         throw new MethodNotAllowException('You can not add card to collection as array. Use addCard() method!');
@@ -110,8 +117,15 @@ class CardCollection implements \Countable, \Iterator, \ArrayAccess
     /**
      * @inheritdoc
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         unset($this->cards[$offset]);
     }
+
+    public function toArray(): array
+    {
+        return $this->cards;
+    }
+
+
 }
