@@ -7,18 +7,38 @@ namespace Tests\Makao\Service;
 use Makao\Card;
 use Makao\Collection\CardCollection;
 use Makao\Service\CardService;
+use Makao\Service\ShuffleService;
 use PHPUnit\Framework\TestCase;
 
 
 class CardServiceTest extends TestCase
 {
+
+    /**
+     * @var CardService
+     */
+    private $cardServiceUnderTest;
+    /**
+     * @var ShuffleService|\PHPUnit\Framework\MockObject\MockObject
+     */
+    private $shuffleServiceMock;
+
+    /**
+     * @throws \ReflectionException
+     */
+    protected function setUp(): void
+    {
+        $this->shuffleServiceMock = $this->createMock(ShuffleService::class);
+        $this->cardServiceUnderTest = new CardService($this->shuffleServiceMock);
+    }
+
     public function testShouldAllowCreateNewCardCollection(){
         //expect
 
         //given
-        $cardService = new CardService();
+
         //when
-        $actual = $cardService->createDeck();
+        $actual = $this->cardServiceUnderTest->createDeck();
         //then
         $this->assertInstanceOf(CardCollection::class, $actual);
         $this->assertCount(52, $actual);
@@ -31,5 +51,26 @@ class CardServiceTest extends TestCase
                 ++$i;
             }
         }
+    }
+    public function testShouldShuffleCardsInCardCollection(){
+        //expect
+
+        //given
+        $firstCard = new Card(Card::VALUE_EIGHT, Card::COLOR_DIAMOND);
+        $secondCard = new Card(Card::VALUE_FIVE, Card::COLOR_CLUB);
+
+        $this->shuffleServiceMock->expects($this->once())
+            ->method('shuffle')
+            ->willReturn([$secondCard, $firstCard]);
+
+        $cardCollection = new CardCollection();
+        $cardCollection
+            ->add($firstCard)
+            ->add($secondCard);
+        //when
+        $actual = $this->cardServiceUnderTest->shuffle($cardCollection);
+        //then
+        $this->assertSame($secondCard, $actual->pickCard());
+        $this->assertSame($firstCard, $actual->pickCard());
     }
 }

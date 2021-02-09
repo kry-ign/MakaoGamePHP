@@ -11,6 +11,13 @@ use Makao\Collection\CardCollection;
 class CardService
 {
 
+    private ShuffleService $shuffleService;
+
+    public function __construct(ShuffleService $shuffleService)
+    {
+        $this->shuffleService = $shuffleService;
+    }
+
     public function createDeck(): CardCollection
     {
         $deck = new CardCollection();
@@ -21,4 +28,11 @@ class CardService
         }
         return $deck;
     }
+
+    public function shuffle(CardCollection $cardCollection): CardCollection
+    {
+
+        return new CardCollection($this->shuffleService->shuffle($cardCollection->toArray()));
+    }
+
 }
